@@ -1,3 +1,5 @@
+from middleware import resend
+
 from flask import Flask, request
 
 app = Flask(__name__)
@@ -6,5 +8,5 @@ app = Flask(__name__)
 @app.route('/<path:path>')
 def hello(path):
     if request.method == 'POST':
-        print('opa')
-    return ''
+        continue
+    return resend(request, path)
