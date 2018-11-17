@@ -1,9 +1,10 @@
-from flask import Flask
-from middleware import SimpleMiddleWare
+from flask import Flask, request
+
 app = Flask(__name__)
-# app.wsgi_app = SimpleMiddleWare(app.wsgi_app)
 
 @app.route('/', defaults={'path': ''})
 @app.route('/<path:path>')
 def hello(path):
-    return "Hello World!"
+    if request.method == 'POST':
+        print('opa')
+    return ''
