@@ -11,3 +11,6 @@ def hello(path):
     if request.method == 'POST':
         pass
     return resend(request, path)
+
+if __name__ == '__main__':
+    app.run()
