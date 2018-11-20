@@ -5,8 +5,10 @@ from flask import Flask, request
 app = Flask(__name__)
 CORS(app)
 
-@app.route('/', defaults={'path': ''})
-@app.route('/<path:path>')
+ALL_METHODS = ['POST', 'PUT', 'PATCH' 'DELETE', 'GET']
+
+@app.route('/', defaults={'path': ''}, methods=ALL_METHODS)
+@app.route('/<path:path>', methods=ALL_METHODS)
 def hello(path):
     if request.method == 'POST':
         pass
