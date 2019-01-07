@@ -1,6 +1,13 @@
+import os
+import requests
 from flask_cors import CORS
-from middleware import resend
+from dotenv import load_dotenv
 from flask import Flask, request
+
+load_dotenv()
+
+API = os.getenv('API')
+ENV = os.getenv('FLASK_ENV')
 
 app = Flask(__name__)
 CORS(app)
@@ -12,7 +19,19 @@ ALL_METHODS = ['POST', 'PUT', 'PATCH' 'DELETE', 'GET']
 def hello(path):
     if request.method == 'POST':
         pass
-    return resend(request, path)
+    resp = resend(request, path)
+    return (resp.content, resp.status_code, resp.headers.items())
+
+
+def resend(request, path):
+    #TODO: send readers crashs in Postman API mock
+    headers = {} if ENV == 'dev' else request.headers
+    return requests.request(
+        request.method, 
+        API+path, 
+        data=request.data, 
+        headers=headers, 
+        allow_redirects=True)
 
 if __name__ == '__main__':
-    app.run()
+    app.run(debug=ENV=='dev')
