@@ -16,7 +16,7 @@ ALL_METHODS = ['POST', 'PUT', 'PATCH' 'DELETE', 'GET']
 
 @app.route('/', defaults={'path': ''}, methods=ALL_METHODS)
 @app.route('/<path:path>', methods=ALL_METHODS)
-def hello(path):
+def catch_all(path):
     if request.method == 'POST':
         pass
     resp = resend(request, path)
@@ -24,7 +24,7 @@ def hello(path):
 
 
 def resend(request, path):
-    #TODO: send readers crashs in Postman API mock
+    # NOTE: send readers crashs in Postman API mock
     headers = {} if ENV == 'dev' else request.headers
     return requests.request(
         request.method, 
