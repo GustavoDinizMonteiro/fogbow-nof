@@ -12,7 +12,7 @@ ENV = os.getenv('FLASK_ENV')
 app = Flask(__name__)
 CORS(app)
 
-ALL_METHODS = ['POST', 'PUT', 'PATCH' 'DELETE', 'GET']
+ALL_METHODS = ['POST', 'PUT', 'PATCH', 'DELETE', 'GET']
 
 @app.route('/', defaults={'path': ''}, methods=ALL_METHODS)
 @app.route('/<path:path>', methods=ALL_METHODS)
