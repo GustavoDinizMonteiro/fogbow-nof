@@ -6,8 +6,8 @@ from flask import Flask, request
 
 load_dotenv()
 
-API = os.getenv('API')
-ENV = os.getenv('FLASK_ENV')
+API = os.getenv('PROVIDER_API')
+ENV = os.getenv('ENV')
 
 app = Flask(__name__)
 CORS(app)
@@ -24,7 +24,7 @@ def catch_all(path):
 
 
 def resend(request, path):
-    # NOTE: send readers crashs in Postman API mock
+    # NOTE: send headers crash requests in Postman mock API
     headers = {} if ENV == 'dev' else request.headers
     return requests.request(
         request.method, 
