@@ -1,4 +1,4 @@
-FROM pypy
+FROM pypy:3
 
 ENV HOME /root
 
@@ -8,7 +8,7 @@ WORKDIR /root
 # Cloning and install dependencies
 RUN \
     git clone https://github.com/GustavoDinizMonteiro/network-of-favors.git && \
-    pipenv install
+    (cd network-of-favors && pip3 install)
 
 EXPOSE 5000/tcp
 
