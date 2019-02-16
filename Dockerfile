@@ -15,4 +15,6 @@ EXPOSE 5000/tcp
 # Define working directory.
 WORKDIR /root/network-of-favors
 
+COPY ./.env .
+
 CMD pypy3 app.py
