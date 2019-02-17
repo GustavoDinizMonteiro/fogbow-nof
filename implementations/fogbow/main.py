@@ -9,7 +9,7 @@ resource_cannot_be_providede_response = {
     'status_code': 404
 }
 
-def try_create(request, path):
+def create_local(request, path):
     try_local_reponse = requests.post(
         API+path,
         data=request.data, 
@@ -28,7 +28,7 @@ def try_create(request, path):
     return resource_cannot_be_providede_response
 
 
-def try_create_remote_order(request, path):
+def create_remote(request, path):
     # check if cloud has request resource available
     # check if member has quota
     try_local_reponse = requests.post(
