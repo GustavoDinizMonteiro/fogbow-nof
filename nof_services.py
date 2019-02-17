@@ -1,10 +1,4 @@
-import os
-from imp import load_source
-from dotenv import load_dotenv
-
-CLIENT = os.getenv('CLIENT')
-
-implementation = load_source(CLIENT, './')
+from implementations import implementation
 
 def create_local(request, path):
     return implementation.create_local(request, path)

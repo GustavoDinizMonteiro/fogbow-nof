@@ -1,5 +1,6 @@
 import os
 import requests
+import nof_services
 from flask_cors import CORS
 from dotenv import load_dotenv
 from flask import Flask, request
@@ -18,7 +19,7 @@ ALL_METHODS = ['POST', 'PUT', 'PATCH', 'DELETE', 'GET']
 @app.route('/<path:path>', methods=ALL_METHODS)
 def catch_all(path):
     if request.method == 'POST':
-        pass
+        nof_services.create_local(request, path)
     resp = resend(request, path)
     return (resp.content, resp.status_code, resp.headers.items())
 

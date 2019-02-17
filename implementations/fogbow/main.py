@@ -9,6 +9,8 @@ resource_cannot_be_providede_response = {
     'status_code': 404
 }
 
+__all__ = ['create_local', 'create_remote']
+
 def create_local(request, path):
     try_local_reponse = requests.post(
         API+path,
