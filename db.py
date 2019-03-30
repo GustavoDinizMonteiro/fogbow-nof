@@ -16,8 +16,9 @@ class Fairness(base):
     __tablename__ = 'fairness'
 
     id = Column(Integer, primary_key=True)
-    member = Column(String, nullable=True)
-    justice = Column(Integer)
+    member = Column(String, nullable=False)
+    justice = Column(Integer, nullable=False)
+    quota = Column(Integer)
 
 Session = sessionmaker(db)  
 session = Session()
@@ -40,4 +41,13 @@ def update_global(justice):
     global_fairness = Fairness(member='global', justice=justice)
     session.commit()
 
-__ALL__ = [create_member, update_global]
+def get_members_data():
+    return session.query(Fairness)
+
+def get_member_data(member):
+    members = session.query(Fairness)
+    for member in members:
+        if member.member == member:
+            return member
+
+__ALL__ = [create_member, update_global, get_members_data, get_member_data]

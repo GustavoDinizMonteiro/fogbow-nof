@@ -8,6 +8,7 @@ from db import create_member, update_global
 load_dotenv()
 update_global(1) # TODO: check how is the default value for this.
 
+ENV = os.getenv('ENV')
 app = Flask(__name__)
 CORS(app)
 
@@ -22,7 +23,6 @@ def catch_all(path):
     if request.method == 'POST':
         return extract(nof_services.create_local(request, path))
     return extract(nof_services.resend(request, path))
-
 
 if __name__ == '__main__':
     app.run(debug=ENV=='dev')
