@@ -4,13 +4,15 @@ url = "https://pypi.org/simple"
 name = "pypi"
 
 [requires]
-python_version = "3.5"
+python_version = "3.7"
 
 [packages]
 flask = "*"
 flask-cors = "*"
 requests = "*"
 python-dotenv = "*"
+sqlalchemy = "*"
+psycopg2-binary = "*"
 
 [dev-packages]
 pylint = "*"

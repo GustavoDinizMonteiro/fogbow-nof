@@ -4,8 +4,10 @@ import nof_services
 from flask_cors import CORS
 from dotenv import load_dotenv
 from flask import Flask, request
+from db import create_member, update_global
 
 load_dotenv()
+update_global(1) # TODO: check how is the default value for this.
 
 API = os.getenv('PROVIDER_API')
 ENV = os.getenv('ENV')
