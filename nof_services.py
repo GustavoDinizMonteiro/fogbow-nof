@@ -69,14 +69,28 @@ def create_local(request, path):
             create_local_resp = implementation.create_local(request, path)
             if create_local_resp.status_code < 400:
                 return create_local_resp
-    return resource_cannot_be_providede_response
+    for member in members:
+        create_remote_resp = dispatch_remote_request(request, path)
+        if create_remote_resp.status_code < 400:
+            return create_remote_resp 
 
 def create_remote(request, path):
+    requester = get_requester_from_req(request)
+    has_quota = member_has_quota(requester)
+    if not has_quota:
+        return resource_cannot_be_providede_response
+    create_local_resp = implementation.create_local(request, path)
+    if create_local_resp.status_code < 400:
+        return create_local_resp
+    members = get_members_with_less_quota(requester)
+    for member in members:
+        orders = mplementation.get_current_orders_from_member(member)
+        for order in orders:
+            preempt_order(order)
+            create_local_resp = implementation.create_local(request, path)
+            if create_local_resp.status_code < 400:
+                return create_local_resp
+    return resource_cannot_be_providede_response
+
+def dispatch_remote_request(request, path):
     pass
-    
-    
-    
-    
-
-
-
