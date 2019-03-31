@@ -38,7 +38,7 @@ def member_has_quota(member):
 def get_members_with_less_quota(member):
     member_data = get_member_data(member)
     f = lambda x: x.justice < member_data.justice
-    return filter(f, get_members_data())
+    return list(filter(f, get_members_data()))
 
 def preempt_order(order):
     return implementation.preempt_order(order)

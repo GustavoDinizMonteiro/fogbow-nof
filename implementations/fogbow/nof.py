@@ -22,7 +22,16 @@ def preempt_order(order):
     pass
 
 def get_current_orders_from_member(member):
-    pass
+    req = requests.get(
+        API+'computes/status'
+    )
+    f = lambda x: x.state == 'READY' and x.provider == member
+    return list(filter(f, req.data))
 
 def get_current_quota_used(member):
-    pass
+    req = requests.get(
+        req = requests.get(
+        API+'computes/status'
+    )
+    f = lambda x: x.state == 'READY' and x.provider == member
+    orders = len(list(filter(f, req.data)))
