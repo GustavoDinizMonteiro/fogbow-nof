@@ -19,14 +19,15 @@ resource_cannot_be_providede_response = {
 def get_provider_from_req(request):
     return implementation.get_provider_from_req(request)
 
+def get_requester_from_req(request):
+    return implementation.get_requester_from_req(request)
+
 def resend(request, path):
-    # NOTE: send headers crash requests in Postman mock API
-    headers = {} if ENV == 'dev' else request.headers
     return requests.request(
         request.method, 
         API+path, 
         data=request.data, 
-        headers=headers, 
+        headers=request.headers, 
         allow_redirects=True)
 
 def member_has_quota(member):
@@ -63,7 +64,7 @@ def create_local(request, path):
         return create_local_resp
     members = get_members_with_less_quota(requester)
     for member in members:
-        orders = mplementation.get_current_orders_from_member(member)
+        orders = implementation.get_current_orders_from_member(member)
         for order in orders:
             preempt_order(order)
             create_local_resp = implementation.create_local(request, path)
@@ -84,7 +85,7 @@ def create_remote(request, path):
         return create_local_resp
     members = get_members_with_less_quota(requester)
     for member in members:
-        orders = mplementation.get_current_orders_from_member(member)
+        orders = implementation.get_current_orders_from_member(member)
         for order in orders:
             preempt_order(order)
             create_local_resp = implementation.create_local(request, path)

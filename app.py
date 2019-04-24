@@ -21,7 +21,7 @@ def catch_all(path):
         return (resp.content, resp.status_code, resp.headers.items())
 
     if request.method == 'POST':
-        return extract(nof_services.create_local(request, path))
+        return extract(nof_services.create(request, path))
     return extract(nof_services.resend(request, path))
 
 if __name__ == '__main__':

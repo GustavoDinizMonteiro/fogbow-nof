@@ -21,6 +21,12 @@ def create_local(request, path):
 def preempt_order(order):
     pass
 
+def get_provider_from_req(req):
+    return req.headers['provider']
+
+def get_requester_from_req(req):
+    return req.headers['requester']
+
 def get_current_orders_from_member(member):
     req = requests.get(
         API+'computes/status'
