@@ -31,7 +31,7 @@ def create_member(member_name, justice=1):
     session.commit()
 
 
-def update_global(justice):
+def update_global(justice = 1): # TODO: check how is the default value for this.
     members = session.query(Fairness)
     for member in members:
         if member.member == 'global':

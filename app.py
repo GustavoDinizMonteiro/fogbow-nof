@@ -6,7 +6,7 @@ from flask import Flask, request
 from db import create_member, update_global
 
 load_dotenv()
-update_global(1) # TODO: check how is the default value for this.
+update_global()
 
 ENV = os.getenv('ENV')
 app = Flask(__name__)
