@@ -16,12 +16,6 @@ resource_cannot_be_providede_response = {
     'status_code': 404
 }
 
-def get_provider_from_req(request):
-    return implementation.get_provider_from_req(request)
-
-def get_requester_from_req(request):
-    return implementation.get_requester_from_req(request)
-
 def resend(request, path):
     return requests.request(
         request.method, 
@@ -33,7 +27,7 @@ def resend(request, path):
 def member_has_quota(member):
     member_data = get_member_data(member)
     # TODO: define a default value for this.
-    used_quota = implementation.get_current_quota_used()
+    used_quota = implementation.get_current_quota_used(member_data)
     return True
 
 def get_members_with_less_quota(member):
@@ -48,14 +42,14 @@ def preempt_order(order):
 def create(request, path):
     if path == 'remote-request':
         return create_remote(request, path)
-    provider = get_provider_from_req(request)
+    provider = implementation.get_provider_from_req(request)
     if provider == LOCAL_MEMBER:
         return resend(request, path)
     return create_local(request, path)
     
 
 def create_local(request, path):
-    requester = get_requester_from_req(request)
+    requester = implementation.get_requester_from_req(request)
     has_quota = member_has_quota(requester)
     if not has_quota:
         return resource_cannot_be_providede_response
@@ -71,12 +65,12 @@ def create_local(request, path):
             if create_local_resp.status_code < 400:
                 return create_local_resp
     for member in members:
-        create_remote_resp = dispatch_remote_request(request, path)
+        create_remote_resp = implementation.dispatch_remote_request(request, path)
         if create_remote_resp.status_code < 400:
             return create_remote_resp 
 
 def create_remote(request, path):
-    requester = get_requester_from_req(request)
+    requester = implementation.get_requester_from_req(request)
     has_quota = member_has_quota(requester)
     if not has_quota:
         return resource_cannot_be_providede_response
@@ -92,6 +86,3 @@ def create_remote(request, path):
             if create_local_resp.status_code < 400:
                 return create_local_resp
     return resource_cannot_be_providede_response
-
-def dispatch_remote_request(request, path):
-    pass

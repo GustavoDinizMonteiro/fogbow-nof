@@ -1,5 +1,3 @@
-
-
 def get_member_debt(member):
     pass
 

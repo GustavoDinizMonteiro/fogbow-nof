@@ -20,6 +20,10 @@ class ServiceImplementation:
     
     def create_local(self, request, path):
         return self.implementation.create_local(request, path)
+    
+
+    def dispatch_remote_request(self, request, path):
+        return self.implementation.create_local(request, path)
 
 
     def get_current_orders_from_member(self, member):
