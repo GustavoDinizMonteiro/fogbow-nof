@@ -29,7 +29,7 @@ def get_provider_from_req(req):
     return loads(req.data).get('provider')
 
 def get_requester_from_req(req):
-    return loads(req.data).get('requester')
+    return req.headers.get('requester')
 
 def get_current_orders_from_member(member):
     req = requests.get(

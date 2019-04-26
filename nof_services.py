@@ -42,8 +42,8 @@ def preempt_order(order):
 def create(request, path):
     if path == 'remote-request':
         return create_remote(request, path)
-    provider = implementation.get_provider_from_req(request)
-    if provider == LOCAL_MEMBER:
+    requester = implementation.get_requester_from_req(request)
+    if requester == LOCAL_MEMBER:
         return resend(request, path)
     return create_local(request, path)
     

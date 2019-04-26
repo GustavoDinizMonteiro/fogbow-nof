@@ -1,5 +1,6 @@
 import os
 import nof_services
+from json import dumps
 from flask_cors import CORS
 from dotenv import load_dotenv
 from flask import Flask, request
@@ -18,7 +19,7 @@ ALL_METHODS = ['POST', 'PUT', 'PATCH', 'DELETE', 'GET']
 @app.route('/<path:path>', methods=ALL_METHODS)
 def catch_all(path):
     def extract(resp):
-        return (resp.content, resp.status_code, resp.headers.items())
+        return resp.text, resp.status_code, {'Content-Type': 'application/json'}
 
     if request.method == 'POST':
         return extract(nof_services.create(request, path))
