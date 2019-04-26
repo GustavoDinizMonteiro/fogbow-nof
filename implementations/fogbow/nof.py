@@ -6,6 +6,10 @@ from implementations.fogbow.accounting import get_members_with_more_debt
 
 API = os.getenv('PROVIDER_API')
 
+FOGBOW_HEADERS = {
+    'Fogbow-User-Token': os.getenv('PROVIDER_API_TOKEN')
+}
+
 resource_cannot_be_providede_response = {
     'content': 'It was not possible to fulfill your request.',
     'status_code': 404
@@ -40,7 +44,8 @@ def get_current_orders_from_member(member):
 
 def get_current_quota_used(member):
     req = requests.get(
-        API+'computes/status'
+        API+'computes/status',
+        headers=FOGBOW_HEADERS
     )
-    f = lambda x: x.state == 'READY' and x.provider == member
-    orders = len(list(filter(f, req.content)))
+    f = lambda x: x.get('state') == 'READY' and x.provider == member
+    return len(list(filter(f, loads(req.text) )))

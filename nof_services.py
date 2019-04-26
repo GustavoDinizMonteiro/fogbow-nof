@@ -24,10 +24,10 @@ def resend(request, path):
         headers=request.headers, 
         allow_redirects=True)
 
+# TODO: check how to check if quota is positive
 def member_has_quota(member):
     member_data = get_member_data(member)
-    # TODO: define a default value for this.
-    used_quota = implementation.get_current_quota_used(member_data)
+    used_quota = implementation.get_current_quota_used(member)
     return True
 
 def get_members_with_less_quota(member):
@@ -38,7 +38,6 @@ def get_members_with_less_quota(member):
 def preempt_order(order):
     return implementation.preempt_order(order)
 
-# TODO: check this method
 def create(request, path):
     if path == 'remote-request':
         return create_remote(request, path)

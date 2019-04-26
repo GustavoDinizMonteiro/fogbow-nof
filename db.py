@@ -20,6 +20,11 @@ class Fairness(base):
     justice = Column(Integer, nullable=False)
     quota = Column(Integer)
 
+    def __str__(self):
+        return "Member {} with id: {} has justice: {} and quota: {}".format(
+            self.member, self.id, self.justice, self.quota
+        )
+
 Session = sessionmaker(db)  
 session = Session()
 
@@ -29,6 +34,7 @@ def create_member(member_name, justice=1):
     member = Fairness(member=member_name, justice=justice)
     session.add(member)
     session.commit()
+    return member
 
 
 def update_global(justice = 1): # TODO: check how is the default value for this.
@@ -44,10 +50,11 @@ def update_global(justice = 1): # TODO: check how is the default value for this.
 def get_members_data():
     return session.query(Fairness)
 
-def get_member_data(member):
+def get_member_data(member_name):
     members = session.query(Fairness)
     for member in members:
-        if member.member == member:
+        if member.member == member_name:
             return member
+    return create_member(member_name)
 
 __ALL__ = [create_member, update_global, get_members_data, get_member_data]
